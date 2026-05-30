@@ -64,3 +64,9 @@ En användare får högre behörigheter än avsett.
 ## Slutsats
 
 Genom STRIDE-modellen identifierades flera säkerhetsrisker kopplade till autentisering, åtkomstkontroll och användargenererat innehåll. Säkerhetskraven ovan har definierats för att minska dessa risker och kommer att användas som grund för kodanalys och granskning i kommande faser.
+
+## Presentation
+
+Här är min presentation:
+
+[Öppna presentationen](https://mull-extra-13464102.figma.site)
