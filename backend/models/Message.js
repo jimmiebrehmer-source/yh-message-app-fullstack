@@ -3,7 +3,9 @@ import mongoose from "mongoose"
 const messageSchema = new mongoose.Schema({
   message: {
     type: String,
-    required: true
+    required: true,
+    minlength: 3,
+    maxlength: 140,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
