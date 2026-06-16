@@ -165,7 +165,7 @@ app.patch("/messages/:id", authenticateUser, async (req, res) => {
   }
 })
 
-app.delete("/messages/:id", async (req, res) => {
+app.delete("/messages/:id", authenticateUser, async (req, res) => {
   if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid message ID" })
   try {
     const message = await Message.findById(req.params.id)
