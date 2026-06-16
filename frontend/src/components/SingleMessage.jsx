@@ -6,6 +6,10 @@ export const SingleMessage = ({ message, user, onUnauthorized, fetchPosts }) => 
   const [editedText, setEditedText] = useState(message.message)
   const [editError, setEditError] = useState("")
 
+  // SÄKERHET: isOwner kontrollerar om den inloggade användaren äger meddelandet.
+  // Används för att styra vilka UI-kontroller som visas – en användare ska
+  // aldrig se redigera/radera-knappar för andras meddelanden.
+  // (Säkerhetskrav 1: Access Control / Least Privilege)
   const isOwner = user && user.response.id === message.user?._id
 
   const onDelete = async () => {
@@ -13,6 +17,8 @@ export const SingleMessage = ({ message, user, onUnauthorized, fetchPosts }) => 
       const res = await fetch(`${BASE_URL}/messages/${message._id}`, {
         method: "DELETE",
         headers: {
+          // SÄKERHET: JWT-token skickas med i Authorization-headern.
+          // Backend verifierar tokenen och ägarskapet innan radering sker.
           Authorization: `Bearer ${user?.response?.accessToken}`,
         },
       })
@@ -83,6 +89,11 @@ export const SingleMessage = ({ message, user, onUnauthorized, fetchPosts }) => 
         )}
 
         <div className="message-actions">
+          {/* SÄKERHETSFIX: Radera-knappen visas nu endast för meddelandets ägare.
+              Tidigare visades knappen för alla inloggade användare i UI:t.
+              Även om backend nu blockerar obehörig radering är det god praxis
+              att inte visa kontroller som användaren inte har rätt att använda.
+              (Säkerhetskrav 1: Least Privilege / Access Control) */}
           {isOwner && (
             <button type="button" className="delete-btn" onClick={onDelete}>🗑️</button>
           )}
